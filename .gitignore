@@ -1,0 +1,9 @@
+# Ignore the compiled executable
+main.exe
+main
+
+# Ignore VS Code settings
+.vscode/
+
+# Ignore Environment variables
+.env
