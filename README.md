@@ -1,61 +1,69 @@
-Go User API
-🧪 Overview
+# Go User API 🧪
 
-This project is a RESTful API built with Go to manage users with their name and date of birth (DOB). The API dynamically calculates a user’s age whenever user data is fetched.
+## 📌 Overview
+
+This project is a **RESTful API** built with Go to manage users with their **name** and **date of birth (DOB)**. The API dynamically calculates a user’s age whenever user data is fetched.
 
 It demonstrates:
 
-Clean backend architecture: Handler → Service → Repository
+- **Clean backend architecture:** Handler → Service → Repository  
+- **Fiber web framework** for fast and simple HTTP handling  
+- **SQLC** for type-safe database queries  
+- **Dynamic age calculation** using Go’s `time` package  
 
-Use of Fiber web framework
+---
 
-SQLC for type-safe database queries
+## 📂 Project Structure
 
-Dynamic age calculation using Go’s time package
 
 📂 Project Structure
-/cmd/server/main.go
-/config/
-/db/migrations/
-/db/sqlc/<generated files>
-/internal/
-├── handler/      # HTTP request handlers
-├── repository/ 
-├── service/      # Business logic (age calculation, etc.)
-├── routes/       # Route definitions
-├── middleware/  
-├── models/       
-└── logger/       
 
-🔧 Tech Stack
+- **cmd/server/main.go**
+- **config/**
+- **db/**
+  - migrations/
+  - sqlc/
+- **internal/**
+  - handler/       → HTTP request handlers
+  - repository/    → Database access
+  - service/       → Business logic (age calculation, etc.)
+  - routes/        → Route definitions
+  - middleware/
+  - models/
+  - logger/
+       
 
-Go (Golang)
+---
 
-Fiber (HTTP server)
+## 🔧 Tech Stack
 
-PostgreSQL + SQLC
+- **Language:** Go (Golang)  
+- **Web Framework:** Fiber  
+- **Database:** PostgreSQL + SQLC  
+- **Logging:** Uber Zap  
+- **Validation:** go-playground/validator  
 
-Uber Zap (logging)
+---
 
-go-playground/validator (input validation)
+## 🗄️ Database Schema
 
-🗄️ Database Schema
+**`users` table:**
 
-users table:
+| Field | Type   | Constraints    |
+|-------|--------|----------------|
+| id    | SERIAL | PRIMARY KEY    |
+| name  | TEXT   | NOT NULL       |
+| dob   | DATE   | NOT NULL       |
 
-Field	Type	Constraints
-id	SERIAL	PRIMARY KEY
-name	TEXT	NOT NULL
-dob	DATE	NOT NULL
-🚀 Running the Project
+---
+## 🚀 Running the Project
 
-Clone the repository
-
+1. **Clone the repository**
+```bash
 git clone 
 cd go-user-api
 
-
-Set up PostgreSQL database
+2.Set up PostgreSQL database
 
 CREATE DATABASE userdb;
 CREATE TABLE users (
@@ -65,7 +73,7 @@ CREATE TABLE users (
 );
 
 
-Run the Go server
+3.Run the Go server
 
 go run ./cmd/server/main.go
 
@@ -73,14 +81,13 @@ go run ./cmd/server/main.go
 Server runs on: http://localhost:3000
 
 🔄 API Endpoints
-Create User
+-> Create User
 curl -X POST -H "Content-Type: application/json" \
 -d "{\"name\":\"Alice\",\"dob\":\"1990-05-10\"}" \
 http://localhost:3000/users
 
 
 Response:
-
 {
   "id": 1,
   "name": "Alice",
@@ -88,18 +95,18 @@ Response:
   "age": 35
 }
 
-Get User by ID
+-> Get User by ID
 curl http://localhost:3000/users/1
 
-List All Users
+-> List All Users
 curl http://localhost:3000/users
 
-Update User
+-> Update User
 curl -X PUT -H "Content-Type: application/json" \
 -d "{\"name\":\"Alice Updated\",\"dob\":\"1991-03-15\"}" \
 http://localhost:3000/users/1
 
-Delete User
+-> Delete User
 curl -X DELETE http://localhost:3000/users/1
 
 ✅ Key Features
