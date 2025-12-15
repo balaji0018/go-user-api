@@ -79,3 +79,26 @@ func (s *UserService) GetUser(ctx context.Context, id int32) (UserResponse, erro
 		Age:  CalculateAge(user.Dob.Time), //Dynamic Calculation
 	}, nil
 }
+func (s *UserService) GetAllUsers(ctx context.Context) ([]UserResponse, error) {
+	// Use SQLC generated ListUsers
+	users, err := s.queries.ListUsers(ctx)
+	if err != nil {
+		return nil, err
+	}
+
+	var result []UserResponse
+	for _, u := range users {
+		result = append(result, UserResponse{
+			ID:   u.ID,
+			Name: u.Name,
+			Dob:  u.Dob.Time.Format("2006-01-02"),
+			Age:  CalculateAge(u.Dob.Time), // dynamic age calculation
+		})
+	}
+
+	return result, nil
+}
+
+func (s *UserService) DeleteUser(ctx context.Context, id int32) error {
+	return s.queries.DeleteUser(ctx, id)
+}

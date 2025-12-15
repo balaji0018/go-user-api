@@ -30,8 +30,18 @@ func main() {
 	// 4. Define Routes
 	app.Post("/users", userHandler.CreateUser)
 	app.Get("/users/:id", userHandler.GetUser)
+	app.Get("/users", userHandler.GetAllUsers)
+	app.Delete("/users/:id", userHandler.DeleteUser)
 
 	// 5. Start Server on Port 3000
+	app.Get("/", func(c *fiber.Ctx) error {
+		return c.SendString("🚀 Welcome to Go User API! Use /users endpoints to interact with the API.")
+	})
+
+	app.Use(func(c *fiber.Ctx) error {
+		return c.Status(404).SendString("⚠️ Route not found. Please use /users endpoints.")
+	})
+
 	log.Println("Server is running on http://localhost:3000")
 	log.Fatal(app.Listen(":3000"))
 }
